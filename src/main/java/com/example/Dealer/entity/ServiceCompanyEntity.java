@@ -1,7 +1,9 @@
 package com.example.Dealer.entity;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class ServiceCompanyEntity {
 
@@ -21,9 +23,25 @@ public class ServiceCompanyEntity {
     {
         return new ArrayList<>(autoEntities);
     }
-    public void addAutoToServiceCompany(AutoEntity addAuto)
+    public boolean addAutoToServiceCompany(AutoEntity addAuto)
     {
-        this.autoEntities.add(addAuto);
+        Set<AutoEntity> currentAuto = new HashSet<>(autoEntities);
+        if (currentAuto.add(addAuto))
+        {
+            this.autoEntities.add(addAuto);
+            return true;
+        }
+        return false;
+    }
+    public boolean deleteAutoToServiceCompany(AutoEntity deleteAuto)
+    {
+        Set<AutoEntity> currentAuto = new HashSet<>(autoEntities);
+        if (!currentAuto.add(deleteAuto))
+        {
+            currentAuto.remove(deleteAuto);
+            return true;
+        }
+        return false;
     }
     @Override
     public String toString()
