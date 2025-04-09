@@ -30,7 +30,7 @@ public class ServiceCompanyController {
         }
     }
 
-    @PostMapping ("/POST")
+    @PostMapping ("/POST/x§")
     public ResponseEntity postServiceCompany()
     {
         try
@@ -59,6 +59,17 @@ public class ServiceCompanyController {
         try
         {
             return ResponseEntity.ok("DELETE");
+        }catch (Exception e)
+        {
+            return ResponseEntity.badRequest().body("Ошибка");
+        }
+    }
+    @PutMapping("/PUT/")
+    public ResponseEntity putServiceCompany()
+    {
+        try
+        {
+            return ResponseEntity.ok("PUT");
         }catch (Exception e)
         {
             return ResponseEntity.badRequest().body("Ошибка");
