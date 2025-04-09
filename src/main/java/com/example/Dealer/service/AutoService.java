@@ -1,26 +1,24 @@
 package com.example.Dealer.service;
 
 import com.example.Dealer.dto.AutoDto;
+import com.example.Dealer.entity.AutoEntity;
+import com.example.Dealer.entity.ServiceCompanyEntity;
 import com.example.Dealer.repository.AutoRepository;
 import com.example.Dealer.repository.ServiceCompanyRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class AutoService {
 
-    private final ServiceCompanyRepository serviceCompanyRepository;
-    private final AutoRepository autoRepository;
-
-    public AutoService(AutoRepository newAutoRepository, ServiceCompanyRepository newServiceCompanyRepository) {
-        this.serviceCompanyRepository = newServiceCompanyRepository;
-        this.autoRepository = newAutoRepository;
-    }
+    private ServiceCompanyRepository serviceCompanyRepository;
+    private AutoRepository autoRepository;
 
     public AutoService() {
-        this.serviceCompanyRepository = new ServiceCompanyRepository();
-        this.autoRepository = new AutoRepository();
     }
 
     private boolean isCurrentVin(String vinCode) {
@@ -29,42 +27,65 @@ public class AutoService {
 
     public AutoDto getAuto(String vinCode) {
         if (isCurrentVin(vinCode)) {
-            String[] autoInfo = autoRepository.getAuto(vinCode);
-            return new AutoDto(autoInfo[0], autoInfo[1]);
+            AutoDto result = null;
+            if (autoRepository.findById(vinCode).isEmpty()) {
+                result = new AutoDto(autoRepository.findById(vinCode).get().getVinCode(), autoRepository.findById(vinCode).get().getServiceCompany().getNameServiceCompany());
+            }
+            return result;
         }
         return null;
     }
+
     public String getServiceCompany(AutoDto autoDto) {
-            return autoDto.getNameServiceCompany();
+        return autoDto.getNameServiceCompany();
     }
 
     public List<AutoDto> getAllAuto() {
-        return null;
+        List<AutoEntity> autoEntities = autoRepository.findAll();
+        List<AutoDto> result = new ArrayList<>();
+        for (int i = 0; i <= autoEntities.size() - 1; i++) {
+            result.add(new AutoDto(autoEntities.get(i).getVinCode(), autoEntities.get(i).getServiceCompany().getNameServiceCompany()));
+        }
+        return result;
     }
 
     public List<AutoDto> getAllAutoToServiceCompany(String nameServiceCompany) {
-        return null;
+        List<AutoEntity> listEntity = autoRepository.findAll();
+        List<AutoDto> result = new ArrayList<>();
+        for (int i = 0; i <= listEntity.size() - 1; i++) {
+            if (listEntity.get(i).getServiceCompany().getNameServiceCompany().equals(nameServiceCompany)) {
+                result.add(new AutoDto(listEntity.get(i).getVinCode(), nameServiceCompany));
+            }
+        }
+        return result;
     }
 
     public boolean addAuto(String vinCode, String nameServiceCompany) {
         if (isCurrentVin(vinCode)) {
-
+            if(this.isAuto(vinCode))
+            {
+                AutoEntity addAuto = new AutoEntity(vinCode, new ServiceCompanyEntity(nameServiceCompany));
+                autoRepository.save(addAuto);
+                return true;
+            }
         }
         return false;
     }
 
     public boolean deleteAuto(String vinCode) {
         if (isCurrentVin(vinCode)) {
-
+            if (!this.isAuto(vinCode))
+            {
+                autoRepository.deleteById(vinCode);
+                return true;
+            }
         }
         return false;
     }
 
-    public boolean deleteAllAuto(String vinCode) {
-        if (isCurrentVin(vinCode)) {
-
-        }
-        return false;
+    public boolean deleteAllAuto() {
+        autoRepository.deleteAll();
+        return true;
     }
 
     public boolean updateAuto(String vinCode, String oldNameSC, String newNameSC) {
@@ -74,4 +95,18 @@ public class AutoService {
         return false;
     }
 
+    private boolean isAuto(String vinCode)
+    {
+        List<AutoDto> autoDtos = this.getAllAuto();
+        Set<String> vinSet = new HashSet<>();
+        for(int i =0;i<=autoDtos.size()-1;i++)
+        {
+            vinSet.add(autoDtos.get(i).getVinCode());
+        }
+        if(vinSet.add(vinCode))
+        {
+            return true;
+        }
+        return false;
+    }
 }

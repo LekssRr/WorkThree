@@ -2,46 +2,74 @@ package com.example.Dealer.service;
 
 import com.example.Dealer.dto.AutoDto;
 import com.example.Dealer.dto.ServiceCompanyDto;
+import com.example.Dealer.entity.AutoEntity;
+import com.example.Dealer.entity.ServiceCompanyEntity;
 import com.example.Dealer.repository.AutoRepository;
 import com.example.Dealer.repository.ServiceCompanyRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class ServiceCompanyService {
 
-    private final ServiceCompanyRepository serviceCompanyRepository;
-    private final AutoRepository autoRepository;
+    private ServiceCompanyRepository serviceCompanyRepository;
+    private AutoRepository autoRepository;
 
-    public ServiceCompanyService(ServiceCompanyRepository newServiceCompanyRepository, AutoRepository newAutoRepository) {
-        this.serviceCompanyRepository = newServiceCompanyRepository;
-        this.autoRepository = newAutoRepository;
-    }
-
-    public ServiceCompanyService() {
-        this.serviceCompanyRepository = new ServiceCompanyRepository();
-        this.autoRepository = new AutoRepository();
-    }
 
     public List<ServiceCompanyDto> getAllServiceCompany() {
-        return null;
+        List<ServiceCompanyEntity> serviceCompanyEntities = serviceCompanyRepository.findAll();
+        List<ServiceCompanyDto> result = new ArrayList<>();
+        for (int i = 0; i <= serviceCompanyEntities.size() - 1; i++) {
+            result.add(new ServiceCompanyDto(serviceCompanyEntities.get(i).getNameServiceCompany()));
+        }
+        return result;
     }
 
-    public List<AutoDto> getAllVinToServiceCompany() {
-        return null;
+    public List<AutoDto> getAllVinToServiceCompany(String nameServiceCompany) {
+        List<AutoDto> result = new ArrayList<>();
+        if (serviceCompanyRepository.findById(nameServiceCompany).isEmpty()) {
+            List<AutoEntity> autoEntities = serviceCompanyRepository.findById(nameServiceCompany).get().getAutoEntities();
+            for (int i = 0; i <= autoEntities.size() - 1; i++) {
+                result.add(new AutoDto(autoEntities.get(i).getVinCode(), autoEntities.get(i).getServiceCompany().getNameServiceCompany()));
+            }
+        }
+
+        return result;
     }
 
-    public boolean addServiceCompany() {
+    private Set<String> namesServiceCompany() {
+        List<ServiceCompanyDto> serviceCompanyDtoList = this.getAllServiceCompany();
+        Set<String> nameServiceCompanySet = new HashSet<>();
+        for (int i = 0; i <= serviceCompanyDtoList.size() - 1; i++) {
+            nameServiceCompanySet.add(serviceCompanyDtoList.get(i).getNameServiceCompany());
+        }
+        return nameServiceCompanySet;
+    }
+
+    public boolean addServiceCompany(String nameServiceCompany) {
+
+        if (this.namesServiceCompany().add(nameServiceCompany)) {
+            serviceCompanyRepository.save(new ServiceCompanyEntity());
+            return true;
+        }
         return false;
     }
 
-    public boolean deleteServiceCompany() {
+    public boolean deleteServiceCompany(String nameServiceCompany) {
+        if (!this.namesServiceCompany().add(nameServiceCompany)) {
+            serviceCompanyRepository.deleteById(nameServiceCompany);
+            return true;
+        }
         return false;
     }
 
     public boolean deleteAllServiceCompany() {
-        return false;
+        serviceCompanyRepository.deleteAll();
+        return true;
     }
 
     public boolean updateServiceCompany() {

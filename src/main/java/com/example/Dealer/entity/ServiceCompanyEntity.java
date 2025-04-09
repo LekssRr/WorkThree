@@ -1,13 +1,21 @@
 package com.example.Dealer.entity;
 
+
+import jakarta.persistence.*;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+@Entity
+@Table(name = "servicecompany")
 public class ServiceCompanyEntity {
-
+    @Id
+    @Column(name = "service_company")
     private String nameServiceCompany;
+    @OneToMany(mappedBy = "serviceCompany" , cascade = CascadeType.PERSIST)
+    @Column(name = "auto")
     private List<AutoEntity> autoEntities;
 
     public ServiceCompanyEntity(String newNameServiceCompany)
@@ -15,6 +23,11 @@ public class ServiceCompanyEntity {
         this.nameServiceCompany = newNameServiceCompany;
         this.autoEntities = new ArrayList<>();
     }
+
+    public ServiceCompanyEntity() {
+
+    }
+
     public String getNameServiceCompany()
     {
         return nameServiceCompany;

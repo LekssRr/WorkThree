@@ -10,10 +10,6 @@ public class AutoController {
 
     private final AutoService autoService;
 
-    public AutoController()
-    {
-        this.autoService = new AutoService();
-    }
     public AutoController(AutoService newAutoService)
     {
         this.autoService = newAutoService;

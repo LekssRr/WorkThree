@@ -1,12 +1,7 @@
 package com.example.Dealer.repository;
 
-import org.springframework.stereotype.Repository;
+import com.example.Dealer.entity.AutoEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-@Repository
-public class AutoRepository {
-
-    public String[] getAuto(String vinCode)
-    {
-        return null;
-    }
+public interface AutoRepository extends JpaRepository<AutoEntity, String> {
 }
