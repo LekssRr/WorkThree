@@ -19,6 +19,14 @@ public class ServiceCompanyService {
     private ServiceCompanyRepository serviceCompanyRepository;
     private AutoRepository autoRepository;
 
+    public ServiceCompanyService(ServiceCompanyRepository newServiceCompanyRepository, AutoRepository newAutoRepository) {
+        this.serviceCompanyRepository = newServiceCompanyRepository;
+        this.autoRepository = newAutoRepository;
+    }
+    public ServiceCompanyService() {
+
+    }
+
 
     public List<ServiceCompanyDto> getAllServiceCompany() {
         List<ServiceCompanyEntity> serviceCompanyEntities = serviceCompanyRepository.findAll();

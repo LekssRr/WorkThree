@@ -20,6 +20,10 @@ public class AutoService {
 
     public AutoService() {
     }
+    public AutoService(ServiceCompanyRepository newServiceCompanyRepository, AutoRepository newAutoRepository) {
+        this.serviceCompanyRepository = newServiceCompanyRepository;
+        this.autoRepository = newAutoRepository;
+    }
 
     private boolean isCurrentVin(String vinCode) {
         return vinCode.length() - 1 == 17;
@@ -62,8 +66,7 @@ public class AutoService {
 
     public boolean addAuto(String vinCode, String nameServiceCompany) {
         if (isCurrentVin(vinCode)) {
-            if(this.isAuto(vinCode))
-            {
+            if (this.isAuto(vinCode)) {
                 AutoEntity addAuto = new AutoEntity(vinCode, new ServiceCompanyEntity(nameServiceCompany));
                 autoRepository.save(addAuto);
                 return true;
@@ -74,8 +77,7 @@ public class AutoService {
 
     public boolean deleteAuto(String vinCode) {
         if (isCurrentVin(vinCode)) {
-            if (!this.isAuto(vinCode))
-            {
+            if (!this.isAuto(vinCode)) {
                 autoRepository.deleteById(vinCode);
                 return true;
             }
@@ -88,23 +90,37 @@ public class AutoService {
         return true;
     }
 
-    public boolean updateAuto(String vinCode, String oldNameSC, String newNameSC) {
+    public boolean updateAuto(String vinCode, String newNameSC) {
         if (isCurrentVin(vinCode)) {
-
+            if (isAuto(vinCode)) {
+                if (this.isServiceCompany(newNameSC)) {
+                    AutoDto cashAuto = this.getAuto(vinCode);
+                    autoRepository.deleteById(vinCode);
+                    this.addAuto(cashAuto.getVinCode(), newNameSC);
+                }
+            }
         }
         return false;
     }
-
-    private boolean isAuto(String vinCode)
+    private boolean isServiceCompany(String nameServiceCompany)
     {
+        List<ServiceCompanyEntity> serviceCompanyEntities = serviceCompanyRepository.findAll();
+        Set<String> serviceCompanySet = new HashSet<>();
+        for (int i = 0; i <= serviceCompanyEntities.size() - 1; i++) {
+            serviceCompanySet.add(serviceCompanyEntities.get(i).getNameServiceCompany());
+        }
+        if (serviceCompanySet.add(nameServiceCompany)) {
+            return true;
+        }
+        return false;
+    }
+    private boolean isAuto(String vinCode) {
         List<AutoDto> autoDtos = this.getAllAuto();
         Set<String> vinSet = new HashSet<>();
-        for(int i =0;i<=autoDtos.size()-1;i++)
-        {
+        for (int i = 0; i <= autoDtos.size() - 1; i++) {
             vinSet.add(autoDtos.get(i).getVinCode());
         }
-        if(vinSet.add(vinCode))
-        {
+        if (vinSet.add(vinCode)) {
             return true;
         }
         return false;
