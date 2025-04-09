@@ -27,11 +27,15 @@ public class AutoService {
         return vinCode.length() - 1 == 17;
     }
 
-    public AutoDto getServiceCompany(String vinCode) {
+    public AutoDto getAuto(String vinCode) {
         if (isCurrentVin(vinCode)) {
-
+            String[] autoInfo = autoRepository.getAuto(vinCode);
+            return new AutoDto(autoInfo[0], autoInfo[1]);
         }
         return null;
+    }
+    public String getServiceCompany(AutoDto autoDto) {
+            return autoDto.getNameServiceCompany();
     }
 
     public List<AutoDto> getAllAuto() {
