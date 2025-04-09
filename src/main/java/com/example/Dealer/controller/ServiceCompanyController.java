@@ -30,7 +30,7 @@ public class ServiceCompanyController {
         }
     }
 
-    @PostMapping ("/POST/x§")
+    @PostMapping ("/POST/")
     public ResponseEntity postServiceCompany()
     {
         try
