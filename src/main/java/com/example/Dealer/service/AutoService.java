@@ -103,7 +103,7 @@ public class AutoService {
         }
         return false;
     }
-    private boolean isServiceCompany(String nameServiceCompany)
+    public boolean isServiceCompany(String nameServiceCompany)
     {
         List<ServiceCompanyEntity> serviceCompanyEntities = serviceCompanyRepository.findAll();
         Set<String> serviceCompanySet = new HashSet<>();
@@ -115,7 +115,7 @@ public class AutoService {
         }
         return false;
     }
-    private boolean isAuto(String vinCode) {
+    public boolean isAuto(String vinCode) {
         List<AutoDto> autoDtos = this.getAllAuto();
         Set<String> vinSet = new HashSet<>();
         for (int i = 0; i <= autoDtos.size() - 1; i++) {

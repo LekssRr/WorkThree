@@ -149,7 +149,29 @@ public class AutoServiceTest {
     @Test
     public void isAutoTest()
     {
-
+        List<AutoEntity> autoEntities = new ArrayList<>();
+        List<AutoDto> autoDto = new ArrayList<>();
+        String vin = "00000000000000000";
+        String vin1 = "00000000000000001";
+        String vin2 = "00000000000000002";
+        ServiceCompanyEntity sc = new ServiceCompanyEntity("SC-1");
+        ServiceCompanyEntity sc1 = new ServiceCompanyEntity("SC-2");
+        ServiceCompanyEntity sc2 = new ServiceCompanyEntity("SC-3");
+        AutoEntity test = new AutoEntity(vin, sc);
+        AutoEntity test1 = new AutoEntity(vin1, sc1);
+        AutoEntity test2 = new AutoEntity(vin2, sc2);
+        autoEntities.add(test);
+        autoEntities.add(test1);
+        autoEntities.add(test2);
+        for (int i =0; i<=autoEntities.size()-1;i++)
+        {
+            autoDto.add(new AutoDto(autoEntities.get(i).getVinCode(), autoEntities.get(i).getServiceCompany().getNameServiceCompany()));
+        }
+        Mockito.when(autoRepositoryTest.findAll()).thenReturn(autoEntities);
+        Assertions.assertEquals(autoServiceTest.isAuto(vin), true);
+        Assertions.assertEquals(autoServiceTest.isAuto(vin1), true);
+        Assertions.assertEquals(autoServiceTest.isAuto(vin2), true);
+        Assertions.assertEquals(autoServiceTest.isAuto("31231"), false);
     }
 
 }
