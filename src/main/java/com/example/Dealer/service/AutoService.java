@@ -26,13 +26,13 @@ public class AutoService {
     }
 
     private boolean isCurrentVin(String vinCode) {
-        return vinCode.length() - 1 == 17;
+        return vinCode.length() == 17;
     }
 
     public AutoDto getAuto(String vinCode) {
         if (isCurrentVin(vinCode)) {
             AutoDto result = null;
-            if (autoRepository.findById(vinCode).isEmpty()) {
+            if (!autoRepository.findById(vinCode).isEmpty()) {
                 result = new AutoDto(autoRepository.findById(vinCode).get().getVinCode(), autoRepository.findById(vinCode).get().getServiceCompany().getNameServiceCompany());
             }
             return result;
@@ -77,7 +77,7 @@ public class AutoService {
 
     public boolean deleteAuto(String vinCode) {
         if (isCurrentVin(vinCode)) {
-            if (!this.isAuto(vinCode)) {
+            if (this.isAuto(vinCode)) {
                 autoRepository.deleteById(vinCode);
                 return true;
             }
@@ -97,6 +97,7 @@ public class AutoService {
                     AutoDto cashAuto = this.getAuto(vinCode);
                     autoRepository.deleteById(vinCode);
                     this.addAuto(cashAuto.getVinCode(), newNameSC);
+                    return true;
                 }
             }
         }
@@ -120,7 +121,7 @@ public class AutoService {
         for (int i = 0; i <= autoDtos.size() - 1; i++) {
             vinSet.add(autoDtos.get(i).getVinCode());
         }
-        if (vinSet.add(vinCode)) {
+        if (!vinSet.add(vinCode)) {
             return true;
         }
         return false;
