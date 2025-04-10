@@ -110,7 +110,7 @@ public class AutoService {
         for (int i = 0; i <= serviceCompanyEntities.size() - 1; i++) {
             serviceCompanySet.add(serviceCompanyEntities.get(i).getNameServiceCompany());
         }
-        if (serviceCompanySet.add(nameServiceCompany)) {
+        if (!serviceCompanySet.add(nameServiceCompany)) {
             return true;
         }
         return false;

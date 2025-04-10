@@ -13,7 +13,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 
-import javax.swing.text.html.Option;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -144,7 +143,16 @@ public class AutoServiceTest {
     @Test
     public void isServiceCompanyTest()
     {
-
+        List<ServiceCompanyEntity> testList = new ArrayList<>();
+        ServiceCompanyEntity sc = new ServiceCompanyEntity("SC-1");
+        ServiceCompanyEntity sc1 = new ServiceCompanyEntity("SC-2");
+        ServiceCompanyEntity sc2 = new ServiceCompanyEntity("SC-3");
+        testList.add(sc);
+        testList.add(sc1);
+        testList.add(sc2);
+        Mockito.when(serviceCompanyRepositoryTest.findAll()).thenReturn(testList);
+        Assertions.assertEquals(autoServiceTest.isServiceCompany(sc.getNameServiceCompany()), true);
+        Assertions.assertEquals(autoServiceTest.isServiceCompany("SC-222"), false);
     }
     @Test
     public void isAutoTest()

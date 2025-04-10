@@ -35,7 +35,6 @@ public class ServiceCompanyServiceTest {
         testServiceCompanyService.add(testSC2);
         Mockito.when(serviceCompanyRepositoryTest.findAll()).thenReturn(testServiceCompanyService);
         Assertions.assertEquals(serviceCompanyService.getAllServiceCompany().size(), testServiceCompanyService.size());
-
     }
 
     @Test
