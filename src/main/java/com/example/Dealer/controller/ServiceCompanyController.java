@@ -1,12 +1,18 @@
 package com.example.Dealer.controller;
 
+import com.example.Dealer.service.ServiceCompanyService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/ServiceCompany")
 public class ServiceCompanyController {
+    private final ServiceCompanyService serviceCompanyService;
 
+    public ServiceCompanyController(ServiceCompanyService newServiceCompnayService)
+    {
+        this.serviceCompanyService = newServiceCompnayService;
+    }
     @GetMapping("/GET")
     public ResponseEntity getAllServiceCompany()
     {

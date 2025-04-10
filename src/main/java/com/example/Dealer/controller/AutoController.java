@@ -1,6 +1,7 @@
 package com.example.Dealer.controller;
 
 import com.example.Dealer.service.AutoService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 public class AutoController {
 
     private final AutoService autoService;
-
+    @Autowired
     public AutoController(AutoService newAutoService)
     {
         this.autoService = newAutoService;
