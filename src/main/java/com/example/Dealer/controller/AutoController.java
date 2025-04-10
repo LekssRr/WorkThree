@@ -10,78 +10,62 @@ import org.springframework.web.bind.annotation.*;
 public class AutoController {
 
     private final AutoService autoService;
+
     @Autowired
-    public AutoController(AutoService newAutoService)
-    {
+    public AutoController(AutoService newAutoService) {
         this.autoService = newAutoService;
     }
 
     @GetMapping("/GET")
-    public ResponseEntity getAllAuto()
-    {
-        try
-        {
+    public ResponseEntity getAllAuto() {
+        try {
             return ResponseEntity.ok("GetAllAuto");
-        }catch (Exception e)
-        {
+        } catch (Exception e) {
             return ResponseEntity.badRequest().body("Ошибка");
         }
     }
+
     @GetMapping("/GET/")
-    public ResponseEntity getAuto()
-    {
-        try
-        {
+    public ResponseEntity getAuto() {
+        try {
             return ResponseEntity.ok("GetAuto");
-        }catch (Exception e)
-        {
+        } catch (Exception e) {
             return ResponseEntity.badRequest().body("Ошибка");
         }
     }
 
     @PostMapping("/POST/")
-    public ResponseEntity postAuto()
-    {
-        try
-        {
+    public ResponseEntity postAuto() {
+        try {
             return ResponseEntity.ok("Post");
-        }catch (Exception e)
-        {
+        } catch (Exception e) {
             return ResponseEntity.badRequest().body("Ошибка");
         }
     }
 
     @DeleteMapping("/DELETE")
-    public ResponseEntity deleteAllAuto()
-    {
-        try
-        {
+    public ResponseEntity deleteAllAuto() {
+        try {
             return ResponseEntity.ok("DELETEAll");
-        }catch (Exception e)
-        {
+        } catch (Exception e) {
             return ResponseEntity.badRequest().body("Ошибка");
         }
     }
+
     @DeleteMapping("/DELETE/")
-    public ResponseEntity deleteAuto()
-    {
-        try
-        {
+    public ResponseEntity deleteAuto() {
+        try {
             return ResponseEntity.ok("DELETE");
-        }catch (Exception e)
-        {
+        } catch (Exception e) {
             return ResponseEntity.badRequest().body("Ошибка");
         }
     }
 
     @PutMapping("/PUT/")
-    public ResponseEntity putAuto()
-    {
-        try
-        {
+    public ResponseEntity putAuto() {
+        try {
             return ResponseEntity.ok("PUT");
-        }catch (Exception e)
-        {
+        } catch (Exception e) {
             return ResponseEntity.badRequest().body("Ошибка");
         }
     }
