@@ -7,10 +7,8 @@ import com.example.Dealer.repository.AutoRepository;
 import com.example.Dealer.repository.ServiceCompanyRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class AutoService {
@@ -20,6 +18,7 @@ public class AutoService {
 
     public AutoService() {
     }
+
     public AutoService(ServiceCompanyRepository newServiceCompanyRepository, AutoRepository newAutoRepository) {
         this.serviceCompanyRepository = newServiceCompanyRepository;
         this.autoRepository = newAutoRepository;
@@ -46,6 +45,10 @@ public class AutoService {
 
     public List<AutoDto> getAllAuto() {
         List<AutoEntity> autoEntities = autoRepository.findAll();
+        return this.convertAutoEntityToAutoDto(autoEntities);
+    }
+
+    private List<AutoDto> convertAutoEntityToAutoDto(List<AutoEntity> autoEntities) {
         List<AutoDto> result = new ArrayList<>();
         for (int i = 0; i <= autoEntities.size() - 1; i++) {
             result.add(new AutoDto(autoEntities.get(i).getVinCode(), autoEntities.get(i).getServiceCompany().getNameServiceCompany()));
@@ -54,14 +57,13 @@ public class AutoService {
     }
 
     public List<AutoDto> getAllAutoToServiceCompany(String nameServiceCompany) {
-        List<AutoEntity> listEntity = autoRepository.findAll();
-        List<AutoDto> result = new ArrayList<>();
-        for (int i = 0; i <= listEntity.size() - 1; i++) {
-            if (listEntity.get(i).getServiceCompany().getNameServiceCompany().equals(nameServiceCompany)) {
-                result.add(new AutoDto(listEntity.get(i).getVinCode(), nameServiceCompany));
-            }
-        }
-        return result;
+        List<AutoEntity> listEntity = autoRepository.findAll()
+                .stream()
+                .filter(autoEntity -> {
+                    return autoEntity.getServiceCompany().getNameServiceCompany().equals(nameServiceCompany);
+                })
+                .toList();
+        return this.convertAutoEntityToAutoDto(listEntity);
     }
 
     public boolean addAuto(String vinCode, String nameServiceCompany) {
@@ -103,24 +105,27 @@ public class AutoService {
         }
         return false;
     }
-    public boolean isServiceCompany(String nameServiceCompany)
-    {
+
+    public boolean isServiceCompany(String nameServiceCompany) {
         List<ServiceCompanyEntity> serviceCompanyEntities = serviceCompanyRepository.findAll();
         Set<String> serviceCompanySet = new HashSet<>();
-        for (int i = 0; i <= serviceCompanyEntities.size() - 1; i++) {
-            serviceCompanySet.add(serviceCompanyEntities.get(i).getNameServiceCompany());
-        }
+        serviceCompanySet = serviceCompanyEntities
+                .stream()
+                .map(ServiceCompanyEntity::getNameServiceCompany)
+                .collect(Collectors.toSet());
         if (!serviceCompanySet.add(nameServiceCompany)) {
             return true;
         }
         return false;
     }
+
     public boolean isAuto(String vinCode) {
         List<AutoDto> autoDtos = this.getAllAuto();
         Set<String> vinSet = new HashSet<>();
-        for (int i = 0; i <= autoDtos.size() - 1; i++) {
-            vinSet.add(autoDtos.get(i).getVinCode());
-        }
+        vinSet = autoDtos
+                .stream()
+                .map(AutoDto::getVinCode)
+                .collect(Collectors.toSet());
         if (!vinSet.add(vinCode)) {
             return true;
         }

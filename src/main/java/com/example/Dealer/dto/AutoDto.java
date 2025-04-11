@@ -1,5 +1,7 @@
 package com.example.Dealer.dto;
 
+import com.example.Dealer.entity.AutoEntity;
+
 public class AutoDto {
     private String vinCode;
     private String serviceCompany;
@@ -7,6 +9,11 @@ public class AutoDto {
     public AutoDto(String newVinCode, String newServiceCompany) {
         this.vinCode = newVinCode;
         this.serviceCompany = newServiceCompany;
+    }
+    public AutoDto(AutoEntity autoEntity)
+    {
+        this.vinCode = autoEntity.getVinCode();
+        this.serviceCompany = autoEntity.getServiceCompany().getNameServiceCompany();
     }
 
     public String getVinCode() {
