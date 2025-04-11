@@ -1,9 +1,16 @@
 package com.example.Dealer.controller;
 
+import com.example.Dealer.dto.AutoDto;
+import com.example.Dealer.dto.ServiceCompanyDto;
 import com.example.Dealer.service.ServiceCompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/ServiceCompany")
@@ -15,54 +22,72 @@ public class ServiceCompanyController {
     }
 
     @GetMapping("/GET")
-    public ResponseEntity getAllServiceCompany() {
+    public ResponseEntity<List<String>> getAllServiceCompany() {
+        List<String> result = new ArrayList<>();
         try {
-            return ResponseEntity.ok("GetAll");
+            List<ServiceCompanyDto> serviceCompany = serviceCompanyService.getAllServiceCompany();
+            result = serviceCompany.stream()
+                    .map(ServiceCompanyDto::toString)
+                    .collect(Collectors.toList());
+        return ResponseEntity.ok(result);
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Ошибка");
+            return ResponseEntity.badRequest().body(result);
         }
     }
 
-    @GetMapping("/GET/")
-    public ResponseEntity getServiceCompany() {
+    @GetMapping("/GET/{id}")
+    public ResponseEntity<List<String>> getServiceCompany(@PathVariable String id) {
+        List<String> vinList = new ArrayList<>();
         try {
-            return ResponseEntity.ok("Get");
+            vinList = serviceCompanyService.getAllVinToServiceCompany(id)
+                    .stream()
+                    .map(AutoDto::toString)
+                    .collect(Collectors.toList());
+            return ResponseEntity.ok(vinList);
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Ошибка");
+            return ResponseEntity.badRequest().body(vinList);
         }
     }
 
-    @PostMapping("/POST/")
-    public ResponseEntity postServiceCompany() {
+    @PostMapping("/POST/{id}")
+    public ResponseEntity<String> postServiceCompany(@PathVariable String id) {
+        Boolean result = null;
         try {
-            return ResponseEntity.ok("Post");
+            result = serviceCompanyService.addServiceCompany(id);
+            return ResponseEntity.ok(result.toString());
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Ошибка");
         }
     }
 
     @DeleteMapping("/DELETE")
-    public ResponseEntity deleteAllServiceCompany() {
+    public ResponseEntity<String> deleteAllServiceCompany() {
+        Boolean result = false;
         try {
-            return ResponseEntity.ok("DELETEALL");
+            result = serviceCompanyService.deleteAllServiceCompany();
+            return ResponseEntity.ok(result.toString());
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Ошибка");
         }
     }
 
-    @DeleteMapping("/DELETE/")
-    public ResponseEntity deleteServiceCompany() {
+    @DeleteMapping("/DELETE/{id}")
+    public ResponseEntity<String> deleteServiceCompany(@PathVariable String id) {
+        Boolean result = false;
         try {
-            return ResponseEntity.ok("DELETE");
+            result = serviceCompanyService.deleteServiceCompany(id);
+            return ResponseEntity.ok(result.toString());
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Ошибка");
         }
     }
 
-    @PutMapping("/PUT/")
-    public ResponseEntity putServiceCompany() {
+    @PutMapping("/PUT/{oldSC}/{newSC}")
+    public ResponseEntity putServiceCompany(@PathVariable String oldSC, String newSc) {
+        Boolean result = false;
         try {
-            return ResponseEntity.ok("PUT");
+            result = serviceCompanyService.updateServiceCompany(oldSC, newSc);
+            return ResponseEntity.ok(result.toString());
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Ошибка");
         }

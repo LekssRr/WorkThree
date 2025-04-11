@@ -13,18 +13,17 @@ public class AutoEntityTest {
     private AutoEntity autoEntityTest = new AutoEntity(vinCodeTest, serviceCompanyEntityTest);
 
     @Test
-    void getVinCodeTest()
-    {
+    void getVinCodeTest() {
         Assertions.assertEquals(autoEntityTest.getVinCode(), vinCodeTest);
     }
+
     @Test
-    void getServiceCompanyTest()
-    {
+    void getServiceCompanyTest() {
         Assertions.assertEquals(autoEntityTest.getServiceCompany().getNameServiceCompany(), nameServiceCompanyTest);
     }
+
     @Test
-    void toStringTest()
-    {
+    void toStringTest() {
         Assertions.assertEquals(autoEntityTest.toString(), vinCodeTest);
     }
 }

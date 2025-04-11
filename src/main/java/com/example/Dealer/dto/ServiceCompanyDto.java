@@ -4,8 +4,9 @@ import com.example.Dealer.entity.AutoEntity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 
-public class ServiceCompanyDto {
+public class ServiceCompanyDto implements Function <ServiceCompanyDto, String> {
     private String nameServiceCompany;
     private List<String> autoEntities;
 
@@ -56,5 +57,10 @@ public class ServiceCompanyDto {
             return false;
         }
         return false;
+    }
+
+    @Override
+    public String apply(ServiceCompanyDto serviceCompanyDto) {
+        return serviceCompanyDto.nameServiceCompany;
     }
 }

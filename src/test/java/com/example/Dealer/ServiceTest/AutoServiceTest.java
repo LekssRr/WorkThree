@@ -6,13 +6,11 @@ import com.example.Dealer.entity.ServiceCompanyEntity;
 import com.example.Dealer.repository.AutoRepository;
 import com.example.Dealer.repository.ServiceCompanyRepository;
 import com.example.Dealer.service.AutoService;
-import com.example.Dealer.service.ServiceCompanyService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -32,6 +30,7 @@ public class AutoServiceTest {
         AutoDto testAutoDto = new AutoDto(vinCodeTest, nameServiceCompanyTest);
         Assertions.assertEquals(autoServiceTest.getServiceCompany(testAutoDto), nameServiceCompanyTest);
     }
+
     @Test
     public void getAutoTest() {
         String vin = "00000000000000000";
@@ -42,6 +41,7 @@ public class AutoServiceTest {
         Mockito.when(autoRepositoryTest.findById(vin)).thenReturn(optionalAutoEntity);
         Assertions.assertEquals(autoServiceTest.getAuto(vin), autoDto);
     }
+
     @Test
     public void getAllAutoTest() {
         List<AutoEntity> autoEntities = new ArrayList<>();
@@ -58,13 +58,13 @@ public class AutoServiceTest {
         autoEntities.add(test);
         autoEntities.add(test1);
         autoEntities.add(test2);
-        for (int i =0; i<=autoEntities.size()-1;i++)
-        {
+        for (int i = 0; i <= autoEntities.size() - 1; i++) {
             autoDto.add(new AutoDto(autoEntities.get(i).getVinCode(), autoEntities.get(i).getServiceCompany().getNameServiceCompany()));
         }
         Mockito.when(autoRepositoryTest.findAll()).thenReturn(autoEntities);
         Assertions.assertEquals(autoServiceTest.getAllAuto(), autoDto);
     }
+
     @Test
     public void getAllAutoToServiceCompanyTest() {
         List<AutoEntity> autoEntities = new ArrayList<>();
@@ -85,6 +85,7 @@ public class AutoServiceTest {
         Mockito.when(autoRepositoryTest.findAll()).thenReturn(autoEntities);
         Assertions.assertEquals(autoServiceTest.getAllAutoToServiceCompany(sc.getNameServiceCompany()), autoDto);
     }
+
     @Test
     public void addAutoTest() {
         List<AutoEntity> autoEntities = new ArrayList<>();
@@ -102,8 +103,7 @@ public class AutoServiceTest {
         autoEntities.add(test);
         autoEntities.add(test1);
         autoEntities.add(test2);
-        for (int i =0; i<=autoEntities.size()-1;i++)
-        {
+        for (int i = 0; i <= autoEntities.size() - 1; i++) {
             autoDto.add(new AutoDto(autoEntities.get(i).getVinCode(), autoEntities.get(i).getServiceCompany().getNameServiceCompany()));
         }
         Mockito.when(autoRepositoryTest.findAll()).thenReturn(autoEntities);
@@ -111,6 +111,7 @@ public class AutoServiceTest {
         Assertions.assertEquals(autoServiceTest.addAuto(test3.getVinCode(), test3.getServiceCompany().getNameServiceCompany()), false);
 
     }
+
     @Test
     public void deleteAutoTest() {
         List<AutoEntity> autoEntities = new ArrayList<>();
@@ -127,8 +128,7 @@ public class AutoServiceTest {
         autoEntities.add(test);
         autoEntities.add(test1);
         autoEntities.add(test2);
-        for (int i =0; i<=autoEntities.size()-1;i++)
-        {
+        for (int i = 0; i <= autoEntities.size() - 1; i++) {
             autoDto.add(new AutoDto(autoEntities.get(i).getVinCode(), autoEntities.get(i).getServiceCompany().getNameServiceCompany()));
         }
         Mockito.when(autoRepositoryTest.findAll()).thenReturn(autoEntities);
@@ -140,9 +140,9 @@ public class AutoServiceTest {
     public void updateAutoTest() {
 
     }
+
     @Test
-    public void isServiceCompanyTest()
-    {
+    public void isServiceCompanyTest() {
         List<ServiceCompanyEntity> testList = new ArrayList<>();
         ServiceCompanyEntity sc = new ServiceCompanyEntity("SC-1");
         ServiceCompanyEntity sc1 = new ServiceCompanyEntity("SC-2");
@@ -154,9 +154,9 @@ public class AutoServiceTest {
         Assertions.assertEquals(autoServiceTest.isServiceCompany(sc.getNameServiceCompany()), true);
         Assertions.assertEquals(autoServiceTest.isServiceCompany("SC-222"), false);
     }
+
     @Test
-    public void isAutoTest()
-    {
+    public void isAutoTest() {
         List<AutoEntity> autoEntities = new ArrayList<>();
         List<AutoDto> autoDto = new ArrayList<>();
         String vin = "00000000000000000";
@@ -171,8 +171,7 @@ public class AutoServiceTest {
         autoEntities.add(test);
         autoEntities.add(test1);
         autoEntities.add(test2);
-        for (int i =0; i<=autoEntities.size()-1;i++)
-        {
+        for (int i = 0; i <= autoEntities.size() - 1; i++) {
             autoDto.add(new AutoDto(autoEntities.get(i).getVinCode(), autoEntities.get(i).getServiceCompany().getNameServiceCompany()));
         }
         Mockito.when(autoRepositoryTest.findAll()).thenReturn(autoEntities);

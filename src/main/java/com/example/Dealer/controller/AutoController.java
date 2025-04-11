@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/Auto")
@@ -25,10 +26,9 @@ public class AutoController {
         List<String> result = new ArrayList<>();
         try {
             List<AutoDto> autoDtos = autoService.getAllAuto();
-            for (int i =0; i<= autoDtos.size()-1; i++)
-            {
-                result.add(autoDtos.get(i).toString());
-            }
+            result = autoDtos.stream()
+                    .map(AutoDto::toString)
+                    .collect(Collectors.toList());
             return ResponseEntity.ok(result);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(result);

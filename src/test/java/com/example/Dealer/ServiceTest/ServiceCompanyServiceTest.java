@@ -11,7 +11,6 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -62,6 +61,7 @@ public class ServiceCompanyServiceTest {
         Mockito.when(serviceCompanyRepositoryTest.findById(sc1)).thenReturn(testSCE);
         Assertions.assertEquals(serviceCompanyService.getAllVinToServiceCompany(sc1).getClass(), testAutoDto.getClass());
     }
+
     @Test
     public void addServiceCompanyTest() {
         List<ServiceCompanyEntity> testServiceCompanyService = new ArrayList<>();
@@ -75,6 +75,7 @@ public class ServiceCompanyServiceTest {
         Assertions.assertEquals(serviceCompanyService.addServiceCompany("SC-4"), true);
         Assertions.assertEquals(serviceCompanyService.addServiceCompany("SC-1"), false);
     }
+
     @Test
     public void deleteServiceCompanyTest() {
         List<ServiceCompanyEntity> testServiceCompanyService = new ArrayList<>();
@@ -87,8 +88,8 @@ public class ServiceCompanyServiceTest {
         Mockito.when(serviceCompanyRepositoryTest.findAll()).thenReturn(testServiceCompanyService);
         Assertions.assertEquals(serviceCompanyService.deleteServiceCompany("SC-1"), true);
         Assertions.assertEquals(serviceCompanyService.deleteServiceCompany("SC-4"), false);
-
     }
+
     @Test
     public void updateServiceCompanyTest() {
 

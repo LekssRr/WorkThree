@@ -14,14 +14,12 @@ public class ServiceCompanyDtoTest {
     List<String> allAutoToDtoTest = new ArrayList<>();
 
     @Test
-    void getNameServiceCompanyTest()
-    {
+    void getNameServiceCompanyTest() {
         Assertions.assertEquals(serviceCompanyDtoTest.getNameServiceCompany(), testNameServiceCompany);
     }
 
     @Test
-    void getAutoEntitiesTest()
-    {
+    void getAutoEntitiesTest() {
         allAutoToDtoTest.add("11111");
         allAutoToDtoTest.add("222222");
         serviceCompanyDtoTest.addAutoToServiceCompany("11111");
@@ -30,8 +28,7 @@ public class ServiceCompanyDtoTest {
     }
 
     @Test
-    void addAutoToServiceCompany()
-    {
+    void addAutoToServiceCompany() {
         serviceCompanyDtoTest.addAutoToServiceCompany("22222");
         Assertions.assertEquals(serviceCompanyDtoTest.getAutoEntities().get(0), "22222");
     }

@@ -59,7 +59,6 @@ public class ServiceCompanyService {
     }
 
     public boolean addServiceCompany(String nameServiceCompany) {
-
         if (this.namesServiceCompany().add(nameServiceCompany)) {
             serviceCompanyRepository.save(new ServiceCompanyEntity());
             return true;
@@ -80,7 +79,7 @@ public class ServiceCompanyService {
         return true;
     }
 
-    public boolean updateServiceCompany() {
+    public boolean updateServiceCompany(String oldSc, String newSC) {
         return false;
     }
 }
