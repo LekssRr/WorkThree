@@ -1,6 +1,7 @@
 package com.example.Dealer.controller;
 
 import com.example.Dealer.service.ServiceCompanyService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -8,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/ServiceCompany")
 public class ServiceCompanyController {
     private final ServiceCompanyService serviceCompanyService;
-
+    @Autowired
     public ServiceCompanyController(ServiceCompanyService newServiceCompnayService) {
         this.serviceCompanyService = newServiceCompnayService;
     }

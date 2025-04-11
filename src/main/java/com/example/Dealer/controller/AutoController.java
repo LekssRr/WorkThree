@@ -1,9 +1,13 @@
 package com.example.Dealer.controller;
 
+import com.example.Dealer.dto.AutoDto;
 import com.example.Dealer.service.AutoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/Auto")
@@ -17,45 +21,55 @@ public class AutoController {
     }
 
     @GetMapping("/GET")
-    public ResponseEntity getAllAuto() {
+    public ResponseEntity<List<String>> getAllAuto() {
+        List<String> result = new ArrayList<>();
         try {
-            return ResponseEntity.ok("GetAllAuto");
+            List<AutoDto> autoDtos = autoService.getAllAuto();
+            for (int i =0; i<= autoDtos.size()-1; i++)
+            {
+                result.add(autoDtos.get(i).toString());
+            }
+            return ResponseEntity.ok(result);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(result);
+        }
+    }
+
+    @GetMapping("/GET/{id}")
+    public ResponseEntity<String> getAuto(@PathVariable String id) {
+        try {
+            return ResponseEntity.ok(autoService.getAuto(id).toString());
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Ошибка");
         }
     }
 
-    @GetMapping("/GET/")
-    public ResponseEntity getAuto() {
+    @PostMapping("/POST/{id}/{sc}")
+    public ResponseEntity<String> postAuto(@PathVariable String id, @PathVariable String sc) {
         try {
-            return ResponseEntity.ok("GetAuto");
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Ошибка");
-        }
-    }
-
-    @PostMapping("/POST/")
-    public ResponseEntity postAuto() {
-        try {
-            return ResponseEntity.ok("Post");
+            Boolean res = autoService.addAuto(id, sc);
+            return ResponseEntity.ok(res.toString());
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Ошибка");
         }
     }
 
     @DeleteMapping("/DELETE")
-    public ResponseEntity deleteAllAuto() {
+    public ResponseEntity<String> deleteAllAuto() {
+        String result = "Ошибка";
         try {
-            return ResponseEntity.ok("DELETEAll");
+            Boolean res = autoService.deleteAllAuto();
+            return ResponseEntity.ok(res.toString());
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Ошибка");
+            return ResponseEntity.badRequest().body(result);
         }
     }
 
-    @DeleteMapping("/DELETE/")
-    public ResponseEntity deleteAuto() {
+    @DeleteMapping("/DELETE/{id}")
+    public ResponseEntity<String> deleteAuto(@PathVariable String id) {
         try {
-            return ResponseEntity.ok("DELETE");
+            Boolean result = autoService.deleteAuto(id);
+            return ResponseEntity.ok(result.toString());
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Ошибка");
         }

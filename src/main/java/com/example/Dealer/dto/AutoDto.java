@@ -19,7 +19,7 @@ public class AutoDto {
 
     @Override
     public String toString() {
-        return vinCode;
+        return vinCode + " " + serviceCompany;
     }
 
     @Override
