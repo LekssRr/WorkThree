@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
-@Table(name = "servicecompany")
+@Table(name = "ServiceCompany")
 public class ServiceCompanyEntity {
     @Id
     @Column(name = "service_company")

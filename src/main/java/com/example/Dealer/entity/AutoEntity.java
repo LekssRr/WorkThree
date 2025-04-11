@@ -4,7 +4,7 @@ package com.example.Dealer.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "auto")
+@Table(name = "Auto")
 public class AutoEntity {
     @Id
     @Column(name = "vin")
