@@ -80,6 +80,26 @@ public class ServiceCompanyService {
     }
 
     public boolean updateServiceCompany(String oldSc, String newSC) {
+        if(this.serviceCompanyRepository.findById(oldSc).isEmpty())
+        {
+            ServiceCompanyEntity serviceCompanyEntities = serviceCompanyRepository.findById(oldSc).get();
+            serviceCompanyRepository.save(new ServiceCompanyEntity(newSC));
+            List<AutoEntity> autoEntityList = autoRepository.findAll()
+                    .stream()
+                    .filter(autoEntity -> autoEntity.getServiceCompany().getNameServiceCompany().equals(oldSc))
+                    .toList();
+            serviceCompanyRepository.deleteById(oldSc);
+            for(int i = 0; i<=autoEntityList.size()-1; i++)
+            {
+                autoRepository.deleteById(autoEntityList.get(i).getVinCode());
+            }
+            for(int i = 0; i<=autoEntityList.size()-1; i++)
+            {
+                autoEntityList.get(i).setServiceCompany(new ServiceCompanyEntity(newSC));
+                autoRepository.save(autoEntityList.get(i));
+            }
+            return true;
+        }
         return false;
     }
 }

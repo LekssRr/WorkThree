@@ -13,8 +13,7 @@ public class AutoEntity {
     @Column(name = "service_company")
     private ServiceCompanyEntity serviceCompany;
 
-    public AutoEntity(String newVinCode, ServiceCompanyEntity newServiceCompany)
-    {
+    public AutoEntity(String newVinCode, ServiceCompanyEntity newServiceCompany) {
         this.vinCode = newVinCode;
         this.serviceCompany = newServiceCompany;
     }
@@ -23,17 +22,24 @@ public class AutoEntity {
 
     }
 
-    public String getVinCode()
-    {
+    public String getVinCode() {
         return vinCode;
     }
-    public ServiceCompanyEntity getServiceCompany()
-    {
+
+    public void setVinCode(String newVin) {
+        this.vinCode = newVin;
+    }
+
+    public ServiceCompanyEntity getServiceCompany() {
         return serviceCompany;
     }
+
+    public void setServiceCompany(ServiceCompanyEntity serviceCompany) {
+        this.serviceCompany = serviceCompany;
+    }
+
     @Override
-    public String toString()
-    {
+    public String toString() {
         return vinCode;
     }
 }
