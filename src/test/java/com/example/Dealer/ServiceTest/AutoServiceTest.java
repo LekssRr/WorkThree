@@ -90,6 +90,7 @@ public class AutoServiceTest {
     public void addAutoTest() {
         List<AutoEntity> autoEntities = new ArrayList<>();
         List<AutoDto> autoDto = new ArrayList<>();
+        List<ServiceCompanyEntity> serviceCompanyEntities = new ArrayList<>();
         String vin = "00000000000000000";
         String vin1 = "00000000000000001";
         String vin2 = "00000000000000002";
@@ -103,6 +104,9 @@ public class AutoServiceTest {
         autoEntities.add(test);
         autoEntities.add(test1);
         autoEntities.add(test2);
+        serviceCompanyEntities.add(sc);
+        serviceCompanyEntities.add(sc1);
+        Mockito.when(serviceCompanyRepositoryTest.findAll()).thenReturn(serviceCompanyEntities);
         for (int i = 0; i <= autoEntities.size() - 1; i++) {
             autoDto.add(new AutoDto(autoEntities.get(i).getVinCode(), autoEntities.get(i).getServiceCompany().getNameServiceCompany()));
         }

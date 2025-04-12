@@ -5,6 +5,7 @@ import com.example.Dealer.entity.AutoEntity;
 import com.example.Dealer.entity.ServiceCompanyEntity;
 import com.example.Dealer.repository.AutoRepository;
 import com.example.Dealer.repository.ServiceCompanyRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -12,8 +13,9 @@ import java.util.stream.Collectors;
 
 @Service
 public class AutoService {
-
+    @Autowired
     private ServiceCompanyRepository serviceCompanyRepository;
+    @Autowired
     private AutoRepository autoRepository;
 
     public AutoService() {
@@ -68,10 +70,12 @@ public class AutoService {
 
     public boolean addAuto(String vinCode, String nameServiceCompany) {
         if (isCurrentVin(vinCode)) {
-            if (this.isAuto(vinCode)) {
-                AutoEntity addAuto = new AutoEntity(vinCode, new ServiceCompanyEntity(nameServiceCompany));
-                autoRepository.save(addAuto);
-                return true;
+            if (isServiceCompany(nameServiceCompany)) {
+                if (this.isAuto(vinCode)) {
+                    AutoEntity addAuto = new AutoEntity(vinCode, new ServiceCompanyEntity(nameServiceCompany));
+                    autoRepository.save(addAuto);
+                    return true;
+                }
             }
         }
         return false;

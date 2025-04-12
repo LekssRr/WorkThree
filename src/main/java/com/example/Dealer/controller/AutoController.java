@@ -13,10 +13,9 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/Auto")
 public class AutoController {
-
-    private final AutoService autoService;
-
     @Autowired
+    private AutoService autoService;
+
     public AutoController(AutoService newAutoService) {
         this.autoService = newAutoService;
     }

@@ -15,7 +15,8 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/ServiceCompany")
 public class ServiceCompanyController {
-    private final ServiceCompanyService serviceCompanyService;
+    @Autowired
+    private ServiceCompanyService serviceCompanyService;
     @Autowired
     public ServiceCompanyController(ServiceCompanyService newServiceCompnayService) {
         this.serviceCompanyService = newServiceCompnayService;

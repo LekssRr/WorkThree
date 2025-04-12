@@ -6,6 +6,7 @@ import com.example.Dealer.entity.AutoEntity;
 import com.example.Dealer.entity.ServiceCompanyEntity;
 import com.example.Dealer.repository.AutoRepository;
 import com.example.Dealer.repository.ServiceCompanyRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -15,18 +16,15 @@ import java.util.Set;
 
 @Service
 public class ServiceCompanyService {
-
+    @Autowired
     private ServiceCompanyRepository serviceCompanyRepository;
+    @Autowired
     private AutoRepository autoRepository;
 
     public ServiceCompanyService(ServiceCompanyRepository newServiceCompanyRepository, AutoRepository newAutoRepository) {
         this.serviceCompanyRepository = newServiceCompanyRepository;
         this.autoRepository = newAutoRepository;
     }
-    public ServiceCompanyService() {
-
-    }
-
 
     public List<ServiceCompanyDto> getAllServiceCompany() {
         List<ServiceCompanyEntity> serviceCompanyEntities = serviceCompanyRepository.findAll();
