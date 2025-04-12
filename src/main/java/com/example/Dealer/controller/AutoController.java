@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 public class AutoController {
     @Autowired
     private AutoService autoService;
-
+    @Autowired
     public AutoController(AutoService newAutoService) {
         this.autoService = newAutoService;
     }

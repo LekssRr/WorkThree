@@ -20,7 +20,7 @@ public class ServiceCompanyService {
     private ServiceCompanyRepository serviceCompanyRepository;
     @Autowired
     private AutoRepository autoRepository;
-
+    @Autowired
     public ServiceCompanyService(ServiceCompanyRepository newServiceCompanyRepository, AutoRepository newAutoRepository) {
         this.serviceCompanyRepository = newServiceCompanyRepository;
         this.autoRepository = newAutoRepository;

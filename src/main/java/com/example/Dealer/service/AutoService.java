@@ -17,10 +17,7 @@ public class AutoService {
     private ServiceCompanyRepository serviceCompanyRepository;
     @Autowired
     private AutoRepository autoRepository;
-
-    public AutoService() {
-    }
-
+    @Autowired
     public AutoService(ServiceCompanyRepository newServiceCompanyRepository, AutoRepository newAutoRepository) {
         this.serviceCompanyRepository = newServiceCompanyRepository;
         this.autoRepository = newAutoRepository;
